@@ -17,6 +17,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = []
   spec.require_paths = ["lib"]
+  spec.cert_chain    = ["certs/oz.pem"]
+  spec.signing_key   = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
