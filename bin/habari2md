@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.dirname(__FILE__) + '../lib')
+
+require 'optparse'
+require 'habari2md'
+
+options = {
+  out:      './out',
+  host:     'localhost',
+  user:     'root',
+  password: 'root',
+}
+
+OptionParser.new do |opts|
+  opts.banner = 'Usage: habari2md [options]'
+
+  opts.on("-o", "--output [DIR]", "Output directory") do |dir|
+    options[:out] = dir
+  end
+
+  opts.on("-s", "--host [HOST]", "Database host") do |host|
+    options[:host] = host
+  end
+
+  opts.on("-d", "--db [DB]", "Database name") do |name|
+    options[:db] = name
+  end
+
+  opts.on("-u", "--user [USER]", "Database user") do |user|
+    options[:user] = user
+  end
+
+  opts.on("-p", "--password [PASS]", "Database password") do |pass|
+    options[:password] = pass
+  end
+
+  opts.on("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+end.parse!
+
+Habari2md::Exporter.new(options).export_posts(options[:out])
